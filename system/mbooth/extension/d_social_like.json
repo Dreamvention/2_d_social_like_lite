@@ -1,0 +1,73 @@
+{
+	"codename": "d_social_like",
+    "version": "2.0.1",
+    "name": "Social Like",
+    "description": "This module adds social network like buttons to your webshop. place them anywhere you like and the like buttons will automatically like the current page.",
+    "index": "module/d_social_like",
+    "author": {
+        "name": "Dreamvention",
+        "email": "info@dreamvention.com",
+        "url": "https://dreamvention.com/"
+    },
+    "opencart_version": [
+        "2.0.1.1",
+        "2.0.1.1",
+        "2.0.2.0",
+        "2.0.3.1",
+        "2.1.0.1",
+        "2.1.0.2",
+        "2.2.0.0",
+        "2.3.0.2"
+    ],
+    "mbooth_version": "^4.0.0",
+    "type": "module",
+    "license": {
+        "type": "commercial",
+        "url": "https://shopunity.net/licenses/commercial"
+    },
+    "install": {
+        "url": "extension/module/install&extension=d_social_like"
+    },
+    "uninstall": {
+        "url": "extension/module/uninstall&extension=d_social_like"
+    },
+    "support": {
+        "email": "support@dreamvention.com",
+        "url": "https://dreamvention.com/support"
+    },
+    "required": {
+        "d_shopunity": ">= 3.0.0"
+    },
+    "files": [
+        "system/mbooth/extension/d_social_like.json",
+        "system/mbooth/xml/mbooth_d_social_like.xml",
+        "system/config/d_social_like.php",
+        "system/config/d_social_like_metro.php",
+
+        "admin/controller/module/d_social_like.php",
+        "admin/language/english/module/d_social_like.php",
+        "admin/language/en-gb/module/d_social_like.php",
+        "admin/model/module/d_social_like.php",
+        "admin/view/template/module/d_social_like.tpl",
+        "admin/view/stylesheet/d_social_like.css",
+
+        "catalog/controller/module/d_social_like.php",
+        "catalog/language/english/module/d_social_like.php",
+        "catalog/language/en-gb/module/d_social_like.php",
+        "catalog/view/theme/default/template/module/d_social_like.tpl"
+    ],
+    "dirs": [
+        "admin/view/image/d_social_like",
+        "catalog/view/theme/default/stylesheet/d_social_like"       
+    ],
+    "changelog": [
+        {
+            "version":"2.0.1",
+            "change": "1. Update to OC 2.3.0.2. \r\n 2. Minor fixes."
+        },
+        {
+            "version":"2.0.0",
+            "change": ""
+        }
+    ]
+}

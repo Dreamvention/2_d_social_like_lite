@@ -1,0 +1,40 @@
+/**************************************************/
+/*                  G E N E R A L                 */
+/**************************************************/
+#table_social_likes {
+	width: 100%;
+}
+#table_social_likes td {
+	width: 14%;
+	text-align: center;
+	padding: 5px;
+}
+#table_social_likes tbody td:first-child {
+	text-align: left;
+	padding-left: 3%;
+}
+#table_social_likes td:last-child {
+	width: 2%;
+	padding-right: 0px;
+}
+#table_social_likes thead td {
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.label-top {
+	padding-top: 0px !important;
+}
+.add-on {
+	border: 3px solid #999;
+	border-radius: 5px;
+}
+.icon-drag {
+	cursor: pointer;
+}
+.input-group[class*="col-"] {
+	padding-left: 15px;
+}
+#table_social_likes tbody td {
+	border: 1px solid #dedede;
+
+}
