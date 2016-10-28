@@ -8,7 +8,6 @@ $_['d_social_like'] = array(
 	'url'  => '',
 	'config_setting' => 'd_social_like',
 	'social_likes' => array( 
-
     'google' => array( 
       'id'  => 'google',
       'enabled' => true,
