@@ -19,7 +19,6 @@ $_['d_social_like'] = array(
       'background_color' => '#fff',
       'background_color_active' => '#fcfcfc',
     ),
-
    'linkedin' => array( 
       'id'  => 'linkedin',
       'enabled' => true,
@@ -30,19 +29,18 @@ $_['d_social_like'] = array(
       'icon_color_active' => '#4487bd',
       'background_color' => '#fff',
       'background_color_active' => '#fcfcfc',
-    ),
-
-    'design' => array(
-      'icon_theme' => 'square',
-      'background_color' => '#fff',
-      'border' => true,
-      'border_color' => '#848484',
-      'box_shadow' => true,
-      'box_shadow_color' => "#d7eaf5",
-      'border_radius' => false,
-      'popup_mobile' => true,
-      'custom_style' => ''
     )
+  ),
+  'design' => array(
+    'icon_theme' => 'square',
+    'background_color' => '#fff',
+    'border' => true,
+    'border_color' => '#848484',
+    'box_shadow' => true,
+    'box_shadow_color' => "#d7eaf5",
+    'border_radius' => false,
+    'popup_mobile' => true,
+    'custom_style' => ''
   )
 );
 ?>

@@ -4,7 +4,7 @@ $_['heading_title']     				= '<span style="color:#449DD0; font-weight:bold">Soc
 $_['heading_title_main']				= 'Social Like Lite';
 
 // Text
-$_['text_edit']							= 'Edit Social Like settings';
+$_['text_edit']							= 'Edit Social Like Lite settings';
 $_['text_modules']         				= 'Modules';
 $_['text_settings']						= 'Settings';
 $_['text_design']						= 'Design';
