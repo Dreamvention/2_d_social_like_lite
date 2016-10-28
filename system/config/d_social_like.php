@@ -43,6 +43,6 @@ $_['d_social_like'] = array(
       'popup_mobile' => true,
       'custom_style' => ''
     )
+  )
 );
-
 ?>
