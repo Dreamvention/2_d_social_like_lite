@@ -1,6 +1,6 @@
 {
 	"codename": "d_social_like",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "name": "Social Like",
     "description": "This module adds social network like buttons to your webshop. place them anywhere you like and the like buttons will automatically like the current page.",
     "index": "module/d_social_like",
@@ -61,6 +61,10 @@
         "catalog/view/theme/default/stylesheet/d_social_like"       
     ],
     "changelog": [
+        {
+            "version":"2.0.2",
+            "change":"1. Change core"
+        },
         {
             "version":"2.0.1",
             "change": "1. Update to OC 2.3.0.2. \r\n 2. Minor fixes."
