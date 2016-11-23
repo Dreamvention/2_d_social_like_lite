@@ -1,5 +1,5 @@
 {
-	"codename": "d_social_like",
+	"codename": "d_social_like_lite",
     "version": "2.0.2",
     "name": "Social Like Lite",
     "description": "This module adds social network like buttons to your webshop. place them anywhere you like and the like buttons will automatically like the current page.",
