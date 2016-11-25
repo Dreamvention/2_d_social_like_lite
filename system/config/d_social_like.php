@@ -1,4 +1,4 @@
-<?php 
+<?php
 $_['d_social_like'] = array(
 	'status' => false,
 	'name' => '',
@@ -7,8 +7,8 @@ $_['d_social_like'] = array(
 	'view_id' => 'left',
 	'url'  => '',
 	'config_setting' => 'd_social_like',
-	'social_likes' => array( 
-    'google' => array( 
+	'social_likes' => array(
+    'google' => array(
       'id'  => 'google',
       'enabled' => true,
       'sort_order' => 1,
@@ -16,10 +16,10 @@ $_['d_social_like'] = array(
       'icon' => 'icon-google-plus',
       'icon_color' => '#999999',
       'icon_color_active' => '#dd4b38',
-      'background_color' => '#fff',
+      'background_color' => '#fff', 
       'background_color_active' => '#fcfcfc',
     ),
-   'linkedin' => array( 
+   'linkedin' => array(
       'id'  => 'linkedin',
       'enabled' => true,
       'sort_order' => 3,
