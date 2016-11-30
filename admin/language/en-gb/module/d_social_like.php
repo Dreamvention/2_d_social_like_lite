@@ -37,12 +37,12 @@ $_['text_instructions_full'] 			= '
 		<h4>Notice</h4>
 		<p>Border radius applies only to two views: left and right.</p>
 	</div>
-	<p>You can turn on the pop up for mobile. Its more user-friendly when the like buttons are displayed immediately.</p>  
+	<p>You can turn on the pop up for mobile. Its more user-friendly when the like buttons are displayed immediately.</p>
 	<h2>How to know about the new version?</h2>
 	<p>On the tab "Settings", you can check for updates and update your version of the module.</p>
 	<h2>How to get additional information about the module?</h2>
 	<p>You can write a letter of support in case of problems with the product.</p>
-	<span>Create a support ticket for more help:</span> <a href="http://www.dreamvention.com/support/" target="_blank" class="button">Create ticket</a> 
+	<span>Create a support ticket for more help:</span> <a href="http://www.dreamvention.com/support/" target="_blank" class="button">Create ticket</a>
 </div>
 <div class="col-sm-6">
 	<h2>Vkontakte</h2>
@@ -129,5 +129,9 @@ $_['button_get_update']     			= 'Check for update';
 $_['error_warning']          			= 'Warning: Please check the form carefully for errors!';
 $_['error_permission']    				= 'Warning: You do not have permission to modify module Social Like!';
 $_['error_name']   						= 'Warning: Module Name must be between 3 and 64 characters!';
-
+$_['text_not_found'] = '<div class="jumbotron">
+          <h1>Please install Shopunity</h1>
+          <p>Before you can use this module you will need to install Shopunity. Simply download the archive for your version of opencart and install it view Extension Installer or unzip the archive and upload all the files into your root folder from the UPLOAD folder.</p>
+          <p><a class="btn btn-primary btn-lg" href="https://shopunity.net/download" target="_blank">Download</a></p>
+        </div>';
 ?>
