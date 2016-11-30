@@ -1,6 +1,7 @@
 <?php
 class ControllerModuleDSocialLike extends Controller {
 	private $id = 'd_social_like';
+	private $codename = 'd_social_like';
 	private $route = 'module/d_social_like';
 	private $mbooth = '';
 	private $config_file = '';
