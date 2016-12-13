@@ -1,5 +1,5 @@
 {
-	"codename": "d_social_like_lite",
+		"codename": "d_social_like_lite",
     "version": "2.0.2",
     "name": "Social Like Lite",
     "description": "This module adds social network like buttons to your webshop. place them anywhere you like and the like buttons will automatically like the current page.",
@@ -32,14 +32,14 @@
         "url": "extension/module/uninstall&extension=d_social_like"
     },
     "support": {
-        "email": "support@dreamvention.com", 
+        "email": "support@dreamvention.com",
         "url": "https://dreamvention.com/support"
     },
     "required": {
         "d_shopunity": ">= 3.0.0"
     },
     "files": [
-        "system/mbooth/extension/d_social_like.json",
+        "system/mbooth/extension/d_social_like_lite.json",
         "system/mbooth/xml/mbooth_d_social_like.xml",
         "system/config/d_social_like.php",
 

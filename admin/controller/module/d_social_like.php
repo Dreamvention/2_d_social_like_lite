@@ -332,7 +332,8 @@ class ControllerModuleDSocialLike extends Controller {
 
 	public function install() {
 		$this->load->model($this->route);
-		// $this->{'model_module_' . $this->id}->installDependencies($this->mbooth);
+		$this->load->model('d_shopunity/mbooth');
+		$this->model_d_shopunity_mbooth->installDependencies($this->codename); 
 	}
 }
 ?>
