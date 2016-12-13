@@ -15,8 +15,8 @@
 	    </select>
 		<?php } ?>
 		<?php if($module_id !== 0) {?>
-			<button id="save_and_stay" data-toggle="tooltip" title="<?php echo $button_save_and_stay; ?>" class="btn btn-success"><i class="fa fa-save"></i></button>  
-        <?php } ?>		
+			<button id="save_and_stay" data-toggle="tooltip" title="<?php echo $button_save_and_stay; ?>" class="btn btn-success"><i class="fa fa-save"></i></button>
+        <?php } ?>
         <button id="save_and_exit" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn btn-primary"><i class="fa fa-save"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a>
 	  </div>
@@ -47,15 +47,15 @@
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
             <ul class="nav nav-tabs">
 				<li class="active"><a href="#tab_setting" data-toggle="tab">
-					<span class="fa fa-cog"></span> 
+					<span class="fa fa-cog"></span>
 					<?php echo $text_settings; ?>
-				</a></li>				
+				</a></li>
 				<li><a href="#tab_design" data-toggle="tab">
 					<span class="fa fa-eye"></span>
 					<?php echo $text_design; ?>
 				</a></li>
 				<li><a href="#tab_instruction" data-toggle="tab">
-					<span class="fa fa-graduation-cap"></span> 
+					<span class="fa fa-graduation-cap"></span>
 					<?php echo $text_instructions; ?>
 				</a></li>
 			</ul>
@@ -72,21 +72,14 @@
 							<?php } ?>
 						</div>
 					</div>
+          <div class="form-group">
+            <label class="control-label col-md-2" for="input_status"><?php echo $entry_status; ?></label>
+              <div class="col-md-10">
+                    <input type="hidden" name="<?php echo $id;?>[status]" value="0" />
+                    <input type="checkbox" class="switcher" id="input_status" name="<?php echo $id;?>[status]" <?php echo ($setting['status']) ? 'checked="checked"':'';?> value="1" />
+              </div>
+          </div> <!--status-->
 					<div class="form-group">
-						<label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-						<div class="col-sm-10">
-							<select name="<?php echo $id; ?>[status]" id="input_status" class="form-control">
-							<?php if ($setting['status']) { ?>
-								<option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-								<option value="0"><?php echo $text_disabled; ?></option>
-							<?php } else { ?>
-								<option value="1"><?php echo $text_enabled; ?></option>
-								<option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-							<?php } ?>
-							</select>
-						</div>
-					</div> 
-					<div class="form-group">						
 						<div class="col-sm-12">
 							<table id="table_social_likes">
 								<thead>
@@ -114,31 +107,31 @@
 											<div class="input-group color-picker">
 												<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][icon_color]" class="form-control" value="<?php echo $social_like['icon_color']; ?>" />
 												<span class="input-group-addon"><i></i></span>
-											</div>	
+											</div>
 										</td>
 										<td>
 											<div class="input-group color-picker">
 												<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][icon_color_active]" class="form-control" value="<?php echo $social_like['icon_color_active']; ?>" />
 												<span class="input-group-addon"><i></i></span>
-											</div>	
+											</div>
 										</td>
 										<td>
 											<div class="input-group color-picker">
 												<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][background_color]" class="form-control" value="<?php echo $social_like['background_color']; ?>" />
 												<span class="input-group-addon"><i></i></span>
-											</div>	
+											</div>
 										</td>
 										<td>
 											<div class="input-group color-picker">
 												<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][background_color_active]" class="form-control" value="<?php echo $social_like['background_color_active']; ?>" />
 												<span class="input-group-addon"><i></i></span>
-											</div>	
+											</div>
 										</td>
 										<td>
 											<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][width]" class="form-control" value="<?php echo $social_like['width']; ?>" placeholder="<?php echo $text_width; ?>" size="4"/>
 										</td>
 										<td>
-											<?php if(isset($social_like['api'])){ ?> 
+											<?php if(isset($social_like['api'])){ ?>
 												<input type="text" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][api]" class="form-control api" value="<?php echo $social_like['api']; ?>" size="4"/>
 											<?php } ?>
 										</td>
@@ -188,15 +181,15 @@
 			              </select>
 			            </div>
 			        </div>
-			        <?php } ?>				
-					
+			        <?php } ?>
+
 					<div class="form-group">
 						<label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" title="<?php echo $help_url; ?>"><?php echo $entry_url; ?></span></label>
 						<div class="col-sm-10">
 							<input type="text" name="<?php echo $id; ?>[url]" value="<?php echo $setting['url']; ?>" placeholder="<?php echo $entry_url; ?>" class="form-control"/>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="tab-pane" id="tab_design">
@@ -269,7 +262,7 @@
 						<div class="col-sm-10"><textarea name="<?php echo $id; ?>[design][custom_style]" id="design_custom_style" class="form-control"><?php echo $setting['design']['custom_style']; ?></textarea></div>
 					</div>
 				</div>
-			</div>	      	
+			</div>
 	      	<div class="tab-pane" id="tab_instruction">
 				<div class="tab-body"><?php echo $text_instructions_full; ?></div>
 			</div>
@@ -308,25 +301,25 @@ $('.switcher[type=checkbox]').bootstrapSwitch({
 function showAlert(json) {
 	$('.alert, .text-danger').remove();
 	$('.form-group').removeClass('has-error');
-						
+
 	if (json['error']) {
 		if (json['error']['warning']) {
 			$('#content > .container-fluid').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-		}				
-				
+		}
+
 		for (i in json['error']) {
 			var element = $('#input_' + i);
-					
+
 			if (element.parent().hasClass('input-group')) {
                 $(element).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 			} else {
 				$(element).after('<div class="text-danger">' + json['error'][i] + '</div>');
 			}
-		}				
-				
+		}
+
 		$('.text-danger').parentsUntil('.form-group').parent().addClass('has-error');
 	}
-			
+
 	if (json['success']) {
 		$('#content > .container-fluid').prepend('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 	}
@@ -343,7 +336,7 @@ $('body').on('click', '#save_and_stay', function(){
 			$('#content').fadeTo('slow', 0.5);
 		},
 		complete: function() {
-			$('#content').fadeTo('slow', 1);   
+			$('#content').fadeTo('slow', 1);
 		},
 		success: function(json) {
 			showAlert(json);
@@ -351,9 +344,9 @@ $('body').on('click', '#save_and_stay', function(){
 		error: function(xhr, ajaxOptions, thrownError) {
 			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-    });  
+    });
 });
-	
+
 $('body').on('click', '#save_and_exit', function(){
     $.ajax({
 		type: 'post',
@@ -364,7 +357,7 @@ $('body').on('click', '#save_and_exit', function(){
 			$('#content').fadeTo('slow', 0.5);
 		},
 		complete: function() {
-			$('#content').fadeTo('slow', 1);   
+			$('#content').fadeTo('slow', 1);
 		},
 		success: function(json) {
 			showAlert(json);
@@ -373,10 +366,10 @@ $('body').on('click', '#save_and_exit', function(){
 		error: function(xhr, ajaxOptions, thrownError) {
 			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-    });  
+    });
 });
 
-$('body').on('click', '#button_update', function(){ 
+$('body').on('click', '#button_update', function(){
     $.ajax({
 		url: '<?php echo $get_update; ?>',
 		type: 'post',
@@ -387,7 +380,7 @@ $('body').on('click', '#button_update', function(){
 		},
 
 		complete: function() {
-			$('#button_update').find('.fa-refresh').removeClass('fa-spin');   
+			$('#button_update').find('.fa-refresh').removeClass('fa-spin');
 		},
 
 		success: function(json) {
@@ -410,7 +403,7 @@ $('body').on('click', '#button_update', function(){
 
 			if(json['success']){
 				$('#notification_update').html('<div class="alert alert-success alert-inline">' + json['success'] + '</div>')
-			} 
+			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
