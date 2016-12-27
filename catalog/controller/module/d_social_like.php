@@ -153,7 +153,6 @@ VK.Widgets.Like("vk_like", {type: "button"});
 	public function amazon($social_like){
 		// $result = false;
 		// if(isset($this->request->get['product_id'])){
-
 		// 	$this->load->model('catalog/product');
 		// 	$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
