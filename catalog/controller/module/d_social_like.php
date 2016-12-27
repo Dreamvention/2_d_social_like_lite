@@ -41,7 +41,7 @@ class ControllerModuleDSocialLike extends Controller {
 			$data['count'] = 0;
 			$data['design'] = $setting['design'];
 
-			if($setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) || $setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTPS'])){
+			if(!empty($setting['social_likes']['stumbleupon']) && $setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) || $setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTPS'])){
 				unset($setting['social_likes']['stumbleupon']);
 			}
 
