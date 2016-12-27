@@ -15,7 +15,10 @@ class ControllerModuleDSocialLike extends Controller {
 			$data['button_aready_liked'] = $this->language->get('button_aready_liked');
 			$data['button_like_us'] = $this->language->get('button_like_us');
 
-			$this->config->load($this->codename);
+			$this->load->model($this->route);
+			$this->config_file = $this->model_module_d_social_like->getConfigFileName($this->codename);
+
+			$this->config->load($this->config_file);
 			$config_setting = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
 
 			if (!empty($setting)) {
@@ -27,6 +30,7 @@ class ControllerModuleDSocialLike extends Controller {
 
 			$sort_order = array();
 
+
 			foreach ($setting['social_likes'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
@@ -36,6 +40,10 @@ class ControllerModuleDSocialLike extends Controller {
 			$data['social_likes'] = array();
 			$data['count'] = 0;
 			$data['design'] = $setting['design'];
+
+			if($setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) || $setting['social_likes']['stumbleupon']['enabled'] && !empty($_SERVER['HTTPS'])){
+				unset($setting['social_likes']['stumbleupon']);
+			}
 
 			foreach ($setting['social_likes'] as $social_like){
 				if($social_like['enabled']){
@@ -78,22 +86,19 @@ class ControllerModuleDSocialLike extends Controller {
 		return $result;
 	}
 	public function vkontakte($social_like){
-		$result ='<script type="text/javascript" src="//vk.com/js/api/openapi.js?96"></script>
-
-		<script type="text/javascript">
-		  VK.init({apiId: '.$social_like['api']. ', onlyWidgets: true});
-		</script>
-
-		<div id="vk_like"></div>
-
-		<script type="text/javascript">
-			VK.Widgets.Like("vk_like", {type: "button"});
-		</script>';
+		$result ='<script type="text/javascript" src="https://vk.com/js/api/openapi.js?136"></script>
+<script type="text/javascript">
+  VK.init({apiId: '.$social_like['api'].', onlyWidgets: true});
+</script>
+<div id="vk_like"></div>
+<script type="text/javascript">
+VK.Widgets.Like("vk_like", {type: "button"});
+</script>';
 		return $result;
 	}
 	public function mailru($social_like){
-		$result ='<a target="_blank" class="mrc__plugin_uber_like_button" href="http://connect.mail.ru/share" data-mrc-config="{\'cm\' : \'1\', \'sz\' : \'20\', \'st\' : \'2\', \'tp\' : \'mm\'}" >'.$this->language->get('text_like').'</a>
-		<script src="http://cdn.connect.mail.ru/js/loader.js" type="text/javascript" charset="UTF-8"></script>';
+		$result ='<a target="_blank" class="mrc__plugin_uber_like_button" href="https://connect.mail.ru/share" data-mrc-config="{\'cm\' : \'1\', \'sz\' : \'20\', \'st\' : \'2\', \'tp\' : \'mm\'}" >'.$this->language->get('text_like').'</a>
+		<script src="https://connect.mail.ru/js/loader.js" type="text/javascript" charset="UTF-8"></script>';
 		return $result;
 	}
 	public function odnoklassniki($social_like){
@@ -102,7 +107,7 @@ class ControllerModuleDSocialLike extends Controller {
 			<script>
 			!function (d, id, did, st) {
 			  var js = d.createElement("script");
-			  js.src = "http://connect.ok.ru/connect.js";
+			  js.src = "https://connect.ok.ru/connect.js";
 			  js.onload = js.onreadystatechange = function () {
 			  if (!this.readyState || this.readyState == "loaded" || this.readyState == "complete") {
 			    if (!this.executed) {
@@ -128,7 +133,16 @@ class ControllerModuleDSocialLike extends Controller {
 		return $result;
 	}
 	public function stumbleupon($social_like){
-		$result ='<a class="addthis_button_stumbleupon_badge"></a>';
+		$result ='
+<su:badge layout="1"></su:badge>
+
+<script type="text/javascript">
+  (function() {
+    var li = document.createElement(\'script\'); li.type = \'text/javascript\'; li.async = true;
+    li.src = (\'https:\' == document.location.protocol ? \'https:\' : \'http:\') + \'//platform.stumbleupon.com/1/widgets.js\';
+    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(li, s);
+  })();
+</script>';
 		return $result;
 	}
 	public function foursquare($social_like){
@@ -137,7 +151,7 @@ class ControllerModuleDSocialLike extends Controller {
 	}
 
 	public function amazon($social_like){
-		$result = false;
+		// $result = false;
 		// if(isset($this->request->get['product_id'])){
 
 		// 	$this->load->model('catalog/product');
