@@ -96,6 +96,7 @@
 								</thead>
 								<tbody id="social_likes" class="sortable">
 								<?php foreach($setting['social_likes'] as $social_like) { ?>
+									<?php if(!empty($social_like['id'])){ ?>
 									<tr class="sort-item" data-sort-order="<?php echo $social_like['sort_order']; ?>">
 										<td>
 											<input type="hidden" name="<?php echo $id; ?>[social_likes][<?php echo $social_like['id']; ?>][enabled]" value="0" />
@@ -137,6 +138,7 @@
 										</td>
 										<td><i class="icon-drag fa fa-bars"></i></td>
 									</tr>
+									<?php } ?>
 								<?php } ?>
 								</tbody>
 							</table>
@@ -176,7 +178,7 @@
 			            <div class="col-sm-10">
 			              <select name="<?php echo $id; ?>[config]" id="input_config_file" class="form-control">
 			                <?php foreach ($config_files as $config_file) { ?>
-			                <option value="<?php echo $config_file; ?>"><?php echo $config_file; ?></option>
+			                <option value="<?php echo $config_file; ?>" <?php echo ($config_file == $config)? 'selected="selected"' : ''; ?>><?php echo $config_file; ?></option>
 			                <?php } ?>
 			              </select>
 			            </div>
@@ -409,6 +411,12 @@ $('body').on('click', '#button_update', function(){
 			console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
     })
+});
+
+$('#input_config_file').on('change', function(){
+	var config = $('#input_config_file').val();
+    $('#content').append('<form action="<?php echo $module_link; ?>&module_id=<?php echo $module_id; ?><?php echo ($stores) ? "&store_id=' + $('#input_store').val() + '" : ''; ?>" id="config_update" method="post" style="display:none;"><input type="text" name="config" value="' + config + '" /></form>');
+    $('#config_update').submit();
 });
 
 </script>

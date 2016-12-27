@@ -1,12 +1,12 @@
 <?php
 class ControllerModuleDSocialLike extends Controller {
 
-	private $id = 'd_social_like';
+	private $codename = 'd_social_like';
 	private $route = 'module/d_social_like';
-	
+
 	public function index($setting) {
 		$this->load->language($this->route);
-		
+
 		if ((($setting['language_id'] == (int)$this->config->get('config_language_id')) || ($setting['language_id'] == -1)) && (($setting['store_id'] == (int)$this->config->get('config_store_id')) || ($setting['store_id'] == -1))) {
 
 			$this->document->addScript('//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4d8b33027d80e2ce');
@@ -14,14 +14,14 @@ class ControllerModuleDSocialLike extends Controller {
 			$data['heading_like_us'] = $this->language->get('heading_like_us');
 			$data['button_aready_liked'] = $this->language->get('button_aready_liked');
 			$data['button_like_us'] = $this->language->get('button_like_us');
-		
-			$this->config->load($this->id);
-			$config_setting = ($this->config->get($this->id)) ? $this->config->get($this->id) : array();
+
+			$this->config->load($this->codename);
+			$config_setting = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
 
 			if (!empty($setting)) {
 				$setting = array_replace_recursive($config_setting, $setting);
 			}
-		
+
 			$data['view'] = $setting['view_id'];
 			$data['url'] = $setting['url'];
 
@@ -32,11 +32,11 @@ class ControllerModuleDSocialLike extends Controller {
 			}
 
 			array_multisort($sort_order, SORT_ASC, $setting['social_likes']);
-		
-			$data['social_likes'] = array(); 
+
+			$data['social_likes'] = array();
 			$data['count'] = 0;
 			$data['design'] = $setting['design'];
-		
+
 			foreach ($setting['social_likes'] as $social_like){
 				if($social_like['enabled']){
 					$data['count']++;
@@ -44,16 +44,16 @@ class ControllerModuleDSocialLike extends Controller {
 					$data['social_likes'][$id] = $social_like;
 					$data['social_likes'][$id]['code'] = $this->$id($social_like);
 				}
-			} 
-			
-			if (VERSION >= '2.2.0.0') {
-				$this->document->addStyle('catalog/view/theme/' . $this->config->get($this->config->get('config_theme').'_directory') . '/stylesheet/' . $this->id . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
-			} elseif (file_exists('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/' . $this->id . '/icons/'.$setting['design']['icon_theme'].'/styles.css')) {
-				$this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/' . $this->id . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
-			} else {
-				$this->document->addStyle('catalog/view/theme/default/stylesheet/' . $this->id . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
 			}
-		
+
+			if (VERSION >= '2.2.0.0') {
+				$this->document->addStyle('catalog/view/theme/' . $this->config->get($this->config->get('config_theme').'_directory') . '/stylesheet/' . $this->codename . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
+			} elseif (file_exists('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/' . $this->codename . '/icons/'.$setting['design']['icon_theme'].'/styles.css')) {
+				$this->document->addStyle('catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/' . $this->codename . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
+			} else {
+				$this->document->addStyle('catalog/view/theme/default/stylesheet/' . $this->codename . '/icons/'.$setting['design']['icon_theme'].'/styles.css');
+			}
+
 			if (VERSION >= '2.2.0.0') {
 				return $this->load->view($this->route, $data);
 			} elseif (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/' . $this->route . '.tpl')) {
@@ -61,7 +61,7 @@ class ControllerModuleDSocialLike extends Controller {
 			} else {
 				return $this->load->view('default/template/' . $this->route . '.tpl', $data);
 			}
-		
+
 		}
 	}
 
@@ -79,7 +79,7 @@ class ControllerModuleDSocialLike extends Controller {
 	}
 	public function vkontakte($social_like){
 		$result ='<script type="text/javascript" src="//vk.com/js/api/openapi.js?96"></script>
-		
+
 		<script type="text/javascript">
 		  VK.init({apiId: '.$social_like['api']. ', onlyWidgets: true});
 		</script>
@@ -97,7 +97,7 @@ class ControllerModuleDSocialLike extends Controller {
 		return $result;
 	}
 	public function odnoklassniki($social_like){
-		
+
 		$result ='<a id="ok_shareWidget"></a>
 			<script>
 			!function (d, id, did, st) {
@@ -118,7 +118,7 @@ class ControllerModuleDSocialLike extends Controller {
 			';
 		return $result;
 	}
-		
+
 	public function pinterest($social_like){
 		$result ='<a class="addthis_button_pinterest_pinit"></a>';
 		return $result;
@@ -135,56 +135,56 @@ class ControllerModuleDSocialLike extends Controller {
 		$result ='<a class="addthis_button_foursquare"></a>';
 		return $result;
 	}
-		
+
 	public function amazon($social_like){
 		$result = false;
-		if(isset($this->request->get['product_id'])){
+		// if(isset($this->request->get['product_id'])){
 
-			$this->load->model('catalog/product');
-			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+		// 	$this->load->model('catalog/product');
+		// 	$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-			if ($product_info) {
-				$this->load->model('tool/image');
-				
-				if (VERSION >= '2.2.0.0') {
-                    $width = $this->config->get($this->config->get('config_theme') . '_image_thumb_width');
-                    $height = $this->config->get($this->config->get('config_theme') . '_image_thumb_height');
-                } else {
-                    $width = $this->config->get('config_image_thumb_width');
-                    $height = $this->config->get('config_image_thumb_height');
-                }
+		// 	if ($product_info) {
+		// 		$this->load->model('tool/image');
 
-				if ($product_info['image']) {
-					$image= $this->model_tool_image->resize($product_info['image'], $width, $height);
-				} else {
-					$image = '';
-				}
+		// 		if (VERSION >= '2.2.0.0') {
+  //                   $width = $this->config->get($this->config->get('config_theme') . '_image_thumb_width');
+  //                   $height = $this->config->get($this->config->get('config_theme') . '_image_thumb_height');
+  //               } else {
+  //                   $width = $this->config->get('config_image_thumb_width');
+  //                   $height = $this->config->get('config_image_thumb_height');
+  //               }
 
-				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
-					$price = false;
-				}
+		// 		if ($product_info['image']) {
+		// 			$image= $this->model_tool_image->resize($product_info['image'], $width, $height);
+		// 		} else {
+		// 			$image = '';
+		// 		}
 
-				$result ='<a class="addthis_button_amazonwishlist"></a>
-				<script> 
-					addthis_share = {
-					     passthrough: {
-					         amazonwishlist:{
-					             p:"'.$price.'",
-					             i:"'.$image.'",             
-					             u:"",
-					             t:"'.$product_info['name'].'"
-					            }
-					     }
-					}
-				</script> ';
-			}
-		}
-		
+		// 		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+		// 			$price = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+		// 		} else {
+		// 			$price = false;
+		// 		}
+
+		// 		$result ='<a class="addthis_button_amazonwishlist"></a>
+		// 		<script>
+		// 			addthis_share = {
+		// 			     passthrough: {
+		// 			         amazonwishlist:{
+		// 			             p:"'.$price.'",
+		// 			             i:"'.$image.'",
+		// 			             u:"",
+		// 			             t:"'.$product_info['name'].'"
+		// 			            }
+		// 			     }
+		// 			}
+		// 		</script> ';
+		// 	}
+		// }
+		$result ='<a class="addthis_button_amazonwishlist"></a>';
 		return $result;
-	}	
-	
+	}
+
 	public function addthis($social_like){
 		$result ='<a class="addthis_counter addthis_pill_style"></a>';
 		return $result;

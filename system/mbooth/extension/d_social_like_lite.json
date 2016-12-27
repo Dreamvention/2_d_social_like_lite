@@ -40,8 +40,7 @@
     },
     "files": [
         "system/mbooth/extension/d_social_like_lite.json",
-        "system/mbooth/xml/mbooth_d_social_like.xml",
-        "system/config/d_social_like.php",
+        "system/config/d_social_like_lite.php",
 
         "admin/controller/module/d_social_like.php",
         "admin/language/english/module/d_social_like.php",
@@ -53,6 +52,7 @@
         "catalog/controller/module/d_social_like.php",
         "catalog/language/english/module/d_social_like.php",
         "catalog/language/en-gb/module/d_social_like.php",
+        "catalog/model/module/d_social_like.php",
         "catalog/view/theme/default/template/module/d_social_like.tpl"
     ],
     "dirs": [

@@ -1,20 +1,18 @@
 <?php
 class ControllerModuleDSocialLike extends Controller {
-	private $id = 'd_social_like';
-	private $codename = 'd_social_like_lite';
+	private $codename = 'd_social_like';
 	private $route = 'module/d_social_like';
-	private $mbooth = '';
 	private $config_file = '';
-	private $prefix = '';
-	private $sub_versions = array();
 	private $error = array();
 
 	public function __construct($registry) {
 		parent::__construct($registry);
 		$this->load->model($this->route);
+		$this->load->model('d_shopunity/mbooth');
+		$this->load->model('d_shopunity/setting');
 		$this->d_shopunity = (file_exists(DIR_SYSTEM.'mbooth/extension/d_shopunity.json'));
-		$this->mbooth = $this->{'model_module_' . $this->id}->getMboothFile($this->id, $this->sub_versions);
-		$this->config_file = $this->{'model_module_' . $this->id}->getConfigFile($this->id, $this->sub_versions);
+		$this->extension = $this->model_d_shopunity_mbooth->getExtension($this->codename);
+		$this->config_file = $this->model_d_shopunity_setting->getConfigFileName($this->codename);
 	}
 
 	public function required(){
@@ -41,9 +39,6 @@ class ControllerModuleDSocialLike extends Controller {
 		$this->load->model($this->route);
 		$this->load->model('setting/setting');
 		$this->load->model('extension/module');
-
-		$this->load->model('d_shopunity/setting');
-		$this->load->model('d_shopunity/mbooth');
 
 		$this->model_d_shopunity_mbooth->validateDependencies($this->codename);
 
@@ -80,16 +75,15 @@ class ControllerModuleDSocialLike extends Controller {
 		$data['text_edit'] = $this->language->get('text_edit');
 
 		// Variable
-		$data['id'] = $this->id;
+		$data['id'] = $this->codename;
 		$data['route'] = $this->route;
 		$data['module_id'] = $module_id;
-		$data['mbooth'] = $this->mbooth;
 		$data['config'] = $this->config_file;
 		$data['token'] =  $this->session->data['token'];
-		$data['stores'] = $this->{'model_module_' . $this->id}->getStores();
-		$data['languages'] = $this->{'model_module_' . $this->id}->getLanguages();
-		$data['version'] = $this->{'model_module_' . $this->id}->getVersion($data['mbooth']);
-		$data['no_image'] = $this->{'model_module_' . $this->id}->getThumb('', 100, 100);
+		$data['stores'] = $this->{'model_module_' . $this->codename}->getStores();
+		$data['languages'] = $this->{'model_module_' . $this->codename}->getLanguages();
+		$data['version'] = $this->extension['version'];
+		$data['no_image'] = $this->{'model_module_' . $this->codename}->getThumb('', 100, 100);
 
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$data['server'] = HTTPS_SERVER;
@@ -226,15 +220,27 @@ class ControllerModuleDSocialLike extends Controller {
 		//setting
 		$setting = $this->model_extension_module->getModule($module_id);
 
-		$this->config->load($data['config']);
-		$data['setting'] = ($this->config->get($this->id)) ? $this->config->get($this->id) : array();
+		if(!empty($this->request->post['config'])){
+			$data['config'] = $this->request->post['config'];
+			$this->config->load($this->request->post['config']);
+		} elseif(!empty($setting)) {
+			$data['config'] = $setting['config'];
+			$this->config->load($setting['config']);
+		} else {
+			$this->config->load($data['config']);
+		}
+
+		$data['setting'] = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
 
 		if (!empty($setting)) {
+			if(!empty($this->request->post['config'])){
+				unset($setting['social_likes']);
+			}
 			$data['setting'] = array_replace_recursive($data['setting'], $setting);
 		}
 
 		//get config
-		$data['config_files'] = $this->{'model_module_' . $this->id}->getConfigFiles($this->id);
+		$data['config_files'] = $this->{'model_module_' . $this->codename}->getConfigFiles($this->codename);
 
 		//Get views
 		$data['views'] = array(
@@ -258,7 +264,6 @@ class ControllerModuleDSocialLike extends Controller {
 		foreach(glob(DIR_CONFIG.'/d_social_like*.*') as $file) {
 		    $data['config_settings'][] = substr(basename($file), 0, -4);
 		}
-
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -285,9 +290,9 @@ class ControllerModuleDSocialLike extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 
 			if (!$module_id) {
-				$this->model_extension_module->addModule($this->id, $this->request->post[$this->id]);
+				$this->model_extension_module->addModule($this->codename, $this->request->post[$this->codename]);
 			} else {
-				$this->model_extension_module->editModule($module_id, $this->request->post[$this->id]);
+				$this->model_extension_module->editModule($module_id, $this->request->post[$this->codename]);
 			}
 
 			$json['success'] = $this->language->get('text_success');
@@ -319,7 +324,7 @@ class ControllerModuleDSocialLike extends Controller {
 			return false;
 		}
 
-		$setting = $this->request->post[$this->id];
+		$setting = $this->request->post[$this->codename];
 
 		if ((utf8_strlen($setting['name']) < 3) || (utf8_strlen($setting['name']) > 64)) {
 			$this->error['warning'] = $this->language->get('error_warning');
@@ -333,7 +338,7 @@ class ControllerModuleDSocialLike extends Controller {
 	public function install() {
 		$this->load->model($this->route);
 		$this->load->model('d_shopunity/mbooth');
-		$this->model_d_shopunity_mbooth->installDependencies($this->codename); 
+		$this->model_d_shopunity_mbooth->installDependencies($this->codename);
 	}
 }
 ?>
