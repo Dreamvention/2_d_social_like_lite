@@ -234,29 +234,32 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         );
 
         //setting
-        $setting = $this->model_extension_d_opencart_patch_module->getModule($module_id);
+        $setting = $this->getSetting();
+        // $setting = $this->model_extension_d_opencart_patch_module->getModule($module_id);
 
-        if(!empty($this->request->post['config'])){
-            $data['config'] = $this->request->post['config'];
-            $this->config->load($this->request->post['config']);
-        } elseif(!empty($setting)) {
-            $data['config'] = $setting['config'];
-            $this->config->load($setting['config']);
-        } else {
-            $this->config->load($data['config']);
-        }
+        // if(!empty($this->request->post['config'])){
+        //     $data['config'] = $this->request->post['config'];
+        //     $this->config->load($this->request->post['config']);
+        // } elseif(!empty($setting)) {
+        //     $data['config'] = $setting['config'];
+        //     $this->config->load($setting['config']);
+        // } else {
+        //     $this->config->load($data['config']);
+        // }
 
-        $data['setting'] = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
+        // $data['setting'] = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
 
-        if (!empty($setting)) {
-            if(!empty($this->request->post['config'])){
-                unset($setting['social_likes']);
-            }
-            $data['setting'] = array_replace_recursive($data['setting'], $setting);
-        }
+        // if (!empty($setting)) {
+        //     if(!empty($this->request->post['config'])){
+        //         unset($setting['social_likes']);
+        //     }
+        //     $data['setting'] = array_replace_recursive($data['setting'], $setting);
+        // }
 
-        //get config
-        $data['config_files'] = $this->model_extension_module_d_social_like->getConfigFiles($this->codename);
+
+
+        // //get config
+        // $data['config_files'] = $this->model_extension_module_d_social_like->getConfigFiles($this->codename);
 
         //Get views
         $data['views'] = array(
@@ -277,14 +280,58 @@ class ControllerExtensionModuleDSocialLike extends Controller {
             }
         }
 
-        foreach(glob(DIR_CONFIG.'/d_social_like*.*') as $file) {
-            $data['config_settings'][] = substr(basename($file), 0, -4);
-        }
+        // foreach(glob(DIR_CONFIG.'/d_social_like*.*') as $file) {
+        //     $data['config_settings'][] = substr(basename($file), 0, -4);
+        // }
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
         $this->response->setOutput($this->model_extension_d_opencart_patch_load->view($this->route, $data));
+    }
+
+    public function getSetting(){
+        $key = $this->codename.'_setting';
+
+        if ($this->config_file) {
+            $this->config->load($this->config_file);
+        }
+
+        if (isset($this->request->get['module_id'])) {
+            $module_id = $this->request->get['module_id'];
+        }else{
+            $module_id = 0;
+        }
+
+        $result = ($this->config->get($key)) ? $this->config->get($key) : array();
+
+        if (!isset($this->request->post['config'])) {
+
+            $this->load->model('setting/setting');
+            if (isset($this->request->post[$key])) {
+                $setting = $this->request->post;
+
+            } elseif ($this->model_extension_d_opencart_patch_module->getModule($module_id)) {
+                $setting[$key] = $this->model_extension_d_opencart_patch_module->getModule($module_id);
+            }
+
+            if (isset($setting[$key])) {
+                foreach ($setting[$key] as $key => $value) {
+                    $result[$key] = $value;
+                }
+            }
+        }
+        //get social like settings
+        foreach(glob(DIR_CONFIG.'/d_social_like/*.php') as $file) {
+            $social_like_id = substr(basename($file), 0, -4);
+            if(!isset($result[$key]['social_likes'][$social_like_id])){
+                $this->config->load('d_social_like/'.$social_like_id);
+                if($this->config->get('d_social_like_'.$social_like_id){
+                    $result[$key]['social_likes'][$social_like_id] = $this->config->get('d_social_like_'.$social_like_id); 
+                }
+            }
+        }
+        return $result;
     }
 
     public function setup()
