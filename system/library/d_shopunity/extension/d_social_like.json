@@ -53,7 +53,8 @@
     "files": [
         "system/library/d_shopunity/extension/d_social_like.json",
         "system/config/d_social_like.php",
-        "system/config/d_social_like_metro.php",
+        "system/config/d_social_like/google.php",
+        "system/config/d_social_like/linkedin.php",
 
         "admin/controller/extension/module/d_social_like.php",
         "admin/language/en-gb/extension/module/d_social_like.php",

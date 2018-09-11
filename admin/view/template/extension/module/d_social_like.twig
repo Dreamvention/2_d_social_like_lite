@@ -91,14 +91,14 @@
                     <div class="form-group">
                         <label class="control-label col-md-2" for="input_status">{{ entry_status }}</label>
                         <div class="col-md-10">
-                            <input type="hidden" name="{{ id }}[status]" value="0" />
-                            <input type="checkbox" class="switcher" id="input_status" name="{{ id }}[status]" {{ setting['status'] ? 'checked="checked"':'' }} value="1" />
+                            <input type="hidden" name="{{ codename }}_setting[status]" value="0" />
+                            <input type="checkbox" class="switcher" id="input_status" name="{{ codename }}_setting[status]" {{ setting['status'] ? 'checked="checked"':'' }} value="1" />
                         </div>
                     </div>
                     <div class="form-group required">
                     <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                         <div class="col-sm-10">
-                            <input type="text" name="{{ id }}[name]" value="{{ setting['name'] }}" placeholder="{{ entry_name }}" id="input_name" class="form-control" />
+                            <input type="text" name="{{ codename }}_setting[name]" value="{{ setting['name'] }}" placeholder="{{ entry_name }}" id="input_name" class="form-control" />
                             {% if (error_name) %}
                                 <div class="text-danger">{{ error_name }}</div>
                             {% endif %}
@@ -115,54 +115,54 @@
                                         <td><label class="control-label">{{ entry_background_color }}</label></td>
                                         <td><label class="control-label">{{ entry_background_color_active }}</label></td>
                                         <td><label class="control-label"><span data-toggle="tooltip" title="{{ help_width }}">{{ entry_width }}</span></label></td>
-                                        <td><label class="control-label"><span data-toggle="tooltip" title="{{ help_api }}">{{ entry_api }}</span></label></td>
-                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody id="social_likes" class="sortable">
                                 {% for social_like in setting['social_likes'] %}
                                     {% if (social_like['id'] is not empty) %}
                                     <tr class="sort-item" data-sort-order="{{ social_like['sort_order'] }}">
-                                        <td>
-                                            <input type="hidden" name="{{ id }}[social_likes][{{ social_like['id'] }}][enabled]" value="0" />
-                                            <input type="checkbox" name="{{ id }}[social_likes][{{ social_like['id'] }}][enabled]" {{ social_like['enabled']? 'checked="checked"':'' }} value="1" id="{{ id }}_settings_social_likes_{{ social_like['id'] }}_enabled" class="switcher" data-size="mini"/>
+                                        <td><i class="icon-drag fa fa-bars"></i>
+                                            <input type="hidden" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][id]" value="{{ social_like['id'] }}" />
+                                            <input type="hidden" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][enabled]" value="0" />
+                                            <input type="checkbox" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][enabled]" {{ social_like['enabled']? 'checked="checked"':'' }} value="1" id="{{ codename }}_setting_settings_social_likes_{{ social_like['id'] }}_enabled" class="switcher" data-size="mini"/>
 
-                                            <label class="label-top" for="{{ id }}_social_likes_{{ social_like['id'] }}_enabled"><i class="{{ social_like['icon'] }}"></i>{{ attribute(_context, 'text_'~social_like['id']) }}</label>
-                                            <input type="hidden" name="{{ id }}[social_likes][{{ social_like['id'] }}][sort_order]" class="sort-value" value="{{ social_like['sort_order'] }}" />
-                                        </td>
-                                        <td>
-                                            <div class="input-group color-picker">
-                                                <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][icon_color]" class="form-control" value="{{ social_like['icon_color'] }}" />
-                                                <span class="input-group-addon"><i></i></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="input-group color-picker">
-                                                <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][icon_color_active]" class="form-control" value="{{ social_like['icon_color_active'] }}" />
-                                                <span class="input-group-addon"><i></i></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="input-group color-picker">
-                                                <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][background_color]" class="form-control" value="{{ social_like['background_color'] }}" />
-                                                <span class="input-group-addon"><i></i></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="input-group color-picker">
-                                                <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][background_color_active]" class="form-control" value="{{ social_like['background_color_active'] }}" />
-                                                <span class="input-group-addon"><i></i></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][width]" class="form-control" value="{{ social_like['width'] }}" placeholder="{{ text_width }}" size="4"/>
-                                        </td>
-                                        <td>
+                                            <label class="label-top" for="{{ codename }}_setting_social_likes_{{ social_like['id'] }}_enabled"><i class="{{ social_like['icon'] }}"></i>{{ attribute(_context, 'text_'~social_like['id']) }}</label>
+                                            <input type="hidden" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][sort_order]" class="sort-value" value="{{ social_like['sort_order'] }}" />
                                             {% if (social_like['api'] is defined) %}
-                                                <input type="text" name="{{ id }}[social_likes][{{ social_like['id'] }}][api]" class="form-control api" value="{{ social_like['api'] }}" size="4"/>
+                                                <label class="control-label"><span data-toggle="tooltip" title="{{ help_api }}">{{ entry_api }}</span></label>
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][api]" class="form-control api" value="{{ social_like['api'] }}" size="4"/>
                                             {% endif %}
                                         </td>
-                                        <td><i class="icon-drag fa fa-bars"></i></td>
+                                        <td>
+                                            <div class="input-group color-picker">
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][icon_color]" class="form-control" value="{{ social_like['icon_color'] }}" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group color-picker">
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][icon_color_active]" class="form-control" value="{{ social_like['icon_color_active'] }}" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group color-picker">
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][background_color]" class="form-control" value="{{ social_like['background_color'] }}" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group color-picker">
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][background_color_active]" class="form-control" value="{{ social_like['background_color_active'] }}" />
+                                                <span class="input-group-addon"><i></i></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group" style="width:100px">
+                                                <input type="text" name="{{ codename }}_setting[social_likes][{{ social_like['id'] }}][width]" class="form-control" value="{{ social_like['width'] }}" placeholder="{{ text_width }}"  />
+                                                <span class="input-group-addon">px</span>
+                                            </div>
+                                        </td>
                                     </tr>
                                     {% endif %}
                                 {% endfor %}
@@ -173,7 +173,7 @@
                     {#<div class="form-group">#}
                         {#<label class="col-sm-2 control-label" for="input-language">{{ entry_language }}</label>#}
                         {#<div class="col-sm-10">#}
-                            {#<select name="{{ id }}[language_id]" id="input_language" class="form-control">#}
+                            {#<select name="{{ codename }}_setting[language_id]" id="input_language" class="form-control">#}
                             {#{% for language in languages %}#}
                             {#{% if (language['language_id'] == setting['language_id']) %}#}
                                 {#<option value="{{ language['language_id'] }}" selected="selected">{{ language['name'] }}</option>#}
@@ -187,7 +187,7 @@
                     {#<div class="form-group">#}
                         {#<label class="col-sm-2 control-label" for="input-store">{{ entry_store }}</label>#}
                         {#<div class="col-sm-10">#}
-                            {#<select name="{{ id }}[store_id]" id="input_store" class="form-control">#}
+                            {#<select name="{{ codename }}_setting[store_id]" id="input_store" class="form-control">#}
                             {#{% for store in stores %}#}
                             {#{% if (store['store_id'] == setting['store_id']) %}#}
                                 {#<option value="{{ store['store_id'] }}" selected="selected">{{ store['name'] }}</option>#}
@@ -198,23 +198,23 @@
                             {#</select>#}
                         {#</div>#}
                     {#</div>#}
-                    {% if (config_files) %}
+                    {# {% if (config_files) %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-config"><span data-toggle="tooltip" title="{{ help_config_files }}">{{ entry_config_files }}</span></label>
                         <div class="col-sm-10">
-                          <select name="{{ id }}[config]" id="input_config_file" class="form-control">
+                          <select name="{{ codename }}_setting[config]" id="input_config_file" class="form-control">
                             {% for config_file in config_files %}
                             <option value="{{ config_file }}" {{ config_file == config? 'selected="selected"' : '' }}>{{ config_file }}</option>
                             {% endfor %}
                           </select>
                         </div>
                     </div>
-                    {% endif %}
+                    {% endif %} #}
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-url"><span data-toggle="tooltip" title="{{ help_url }}">{{ entry_url }}</span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="{{ id }}[url]" value="{{ setting['url'] }}" placeholder="{{ entry_url }}" class="form-control"/>
+                            <input type="text" name="{{ codename }}_setting[url]" value="{{ setting['url'] }}" placeholder="{{ entry_url }}" class="form-control"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -231,7 +231,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-view">{{ entry_view }}</label>
                         <div class="col-sm-10">
-                            <select name="{{ id }}[view_id]" class="form-control">
+                            <select name="{{ codename }}_setting[view_id]" class="form-control">
                                 {% for view in views %}
                                 {% if (view['view_id'] == setting['view_id']) %}
                                     <option value="{{ view['view_id'] }}" selected="selected">{{ view['name'] }}</option>
@@ -245,7 +245,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-theme"><span data-toggle="tooltip" title="{{ help_icon_theme }}">{{ entry_icon_theme }}</span></label>
                         <div class="col-sm-10">
-                            <select name="{{ id }}[design][icon_theme]" class="form-control">
+                            <select name="{{ codename }}_setting[design][icon_theme]" class="form-control">
                             {% for icon_theme in icon_themes %}
                                 <option {{ setting['design']['icon_theme'] == icon_theme ? 'selected="selected"' : '' }} value="{{ icon_theme }}">{{ icon_theme }}</option>
                             {% endfor %}
@@ -255,45 +255,45 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-background-color">{{ entry_background_color }}</label>
-                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ id }}[design][background_color]" class="form-control" value="{{ setting['design']['background_color']}}"/><span class="input-group-addon"><i></i></span></div>
+                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ codename }}_setting[design][background_color]" class="form-control" value="{{ setting['design']['background_color']}}"/><span class="input-group-addon"><i></i></span></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-border">{{ entry_border }}</label>
-                        <div class="col-sm-10"><input type="hidden" name="{{ id }}[design][border]" value="0" />
-                        <input type="checkbox" name="{{ id }}[design][border]" {{ setting['design']['border'] ? 'checked="checked"' : '' }} value="1" class="switcher"/></div>
+                        <div class="col-sm-10"><input type="hidden" name="{{ codename }}_setting[design][border]" value="0" />
+                        <input type="checkbox" name="{{ codename }}_setting[design][border]" {{ setting['design']['border'] ? 'checked="checked"' : '' }} value="1" class="switcher"/></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-border-color">{{ entry_border_color }}</label>
-                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ id }}[design][border_color]" class="form-control" value="{{ setting['design']['border_color']}}"/><span class="input-group-addon"><i></i></span></div>
+                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ codename }}_setting[design][border_color]" class="form-control" value="{{ setting['design']['border_color']}}"/><span class="input-group-addon"><i></i></span></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-box-shadow">{{ entry_box_shadow }}</label>
                         <div class="col-sm-10">
-                        <input type="hidden" name="{{ id }}[design][box_shadow]" value="0" />
-                        <input type="checkbox" name="{{ id }}[design][box_shadow]" {{ setting['design']['box_shadow'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
+                        <input type="hidden" name="{{ codename }}_setting[design][box_shadow]" value="0" />
+                        <input type="checkbox" name="{{ codename }}_setting[design][box_shadow]" {{ setting['design']['box_shadow'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-shadow-color">{{ entry_box_shadow_color }}</label>
-                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ id }}[design][box_shadow_color]" class="form-control" value="{{ setting['design']['box_shadow_color']}}"/><span class="input-group-addon"><i></i></span></div>
+                        <div class="input-group color-picker col-sm-2"><input type="text" name="{{ codename }}_setting[design][box_shadow_color]" class="form-control" value="{{ setting['design']['box_shadow_color']}}"/><span class="input-group-addon"><i></i></span></div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-border-radius">{{ entry_border_radius }}</label>
                         <div class="col-sm-10">
-                        <input type="hidden" name="{{ id }}[design][border_radius]" value="0" />
-                        <input type="checkbox" name="{{ id }}[design][border_radius]" {{ setting['design']['border_radius'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
+                        <input type="hidden" name="{{ codename }}_setting[design][border_radius]" value="0" />
+                        <input type="checkbox" name="{{ codename }}_setting[design][border_radius]" {{ setting['design']['border_radius'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-mobile">{{ entry_popup_mobile }}</label>
                         <div class="col-sm-10">
-                        <input type="hidden" name="{{ id }}[design][popup_mobile]" value="0" />
-                        <input type="checkbox" name="{{ id }}[design][popup_mobile]" {{ setting['design']['popup_mobile'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
+                        <input type="hidden" name="{{ codename }}_setting[design][popup_mobile]" value="0" />
+                        <input type="checkbox" name="{{ codename }}_setting[design][popup_mobile]" {{ setting['design']['popup_mobile'] ? 'checked="checked"' : '' }} value="1" class="switcher"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-style"><span data-toggle="tooltip" title="{{ help_custom_style }}">{{ entry_custom_style }}</span></label>
-                        <div class="col-sm-10"><textarea name="{{ id }}[design][custom_style]" id="design_custom_style" class="form-control">{{ setting['design']['custom_style'] }}</textarea></div>
+                        <div class="col-sm-10"><textarea name="{{ codename }}_setting[design][custom_style]" id="design_custom_style" class="form-control">{{ setting['design']['custom_style'] }}</textarea></div>
                     </div>
                 </div>
             </div>

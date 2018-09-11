@@ -1,8 +1,8 @@
 <?php
+
 class ControllerExtensionModuleDSocialLike extends Controller {
 
     private $codename = 'd_social_like';
-    private $codename_pro = 'd_social_like_pro';
     private $route = 'extension/module/d_social_like';
     private $config_file = 'd_social_like';
     private $error = array();
@@ -11,37 +11,28 @@ class ControllerExtensionModuleDSocialLike extends Controller {
     {
         parent::__construct($registry);
 
-        if (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/'.$this->codename_pro.'.json')) {
-
-            if (file_exists(DIR_CONFIG.$this->codename_pro.'.php')) {
-                $this->config_file = $this->codename_pro;
-            }
-        }
-
-        if (file_exists(DIR_LANGUAGE.'en-gb/extension/module/'.$this->codename_pro.'.php')) {
-            $this->load->language('extension/module/'.$this->codename_pro);
-        } else {
-            $this->load->language($this->route);
-        }
-
-
-        if ($this->d_opencart_patch) {
-            $this->load->model('extension/d_opencart_patch/url');
-            $this->load->model('extension/d_opencart_patch/module');
-            $this->load->model('extension/d_opencart_patch/load');
-            $this->load->model('extension/d_opencart_patch/user');
-        }
-        $this->load->model($this->route);
-        $this->load->model('setting/setting');
-        $this->load->model('extension/d_opencart_patch/module');
-        $this->load->model('extension/d_opencart_patch/url');
-        $this->load->model('extension/d_opencart_patch/load');
-
         $this->d_shopunity = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_shopunity.json'));
         $this->d_opencart_patch = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_opencart_patch.json'));
         $this->d_admin_style = (file_exists(DIR_SYSTEM . 'library/d_shopunity/extension/d_admin_style.json'));
         $this->extension = json_decode(file_get_contents(DIR_SYSTEM.'library/d_shopunity/extension/'.$this->codename.'.json'), true);
         $this->d_twig_manager = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_twig_manager.json'));
+        $this->d_social_like_pro = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_social_like_pro.json'));
+
+        // if (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/'.$this->codename_pro.'.json')) {
+
+        //     if (file_exists(DIR_CONFIG.$this->codename_pro.'.php')) {
+        //         $this->config_file = $this->codename_pro;
+        //     }
+        // }
+
+        // if (file_exists(DIR_LANGUAGE.'en-gb/extension/module/'.$this->codename_pro.'.php')) {
+        //     $this->load->language('extension/module/'.$this->codename_pro);
+        // } else {
+        //     $this->load->language($this->route);
+        // }
+
+
+    
     }
 
     public function index()
@@ -67,14 +58,23 @@ class ControllerExtensionModuleDSocialLike extends Controller {
             $module_id = 0;
         }
 
+        $this->load->language($this->route);
+        $this->load->model($this->route);
+        $this->load->model('setting/setting');
+        $this->load->model('extension/d_opencart_patch/module');
+        $this->load->model('extension/d_opencart_patch/url');
+        $this->load->model('extension/d_opencart_patch/load');
+        $this->load->model('extension/d_opencart_patch/user');
+        $this->load->model('extension/d_opencart_patch/cache');
+
+        $this->model_extension_d_opencart_patch_cache->clearTwig();
+
         // Styles and scripts
         $this->document->addStyle('view/stylesheet/d_bootstrap_extra/bootstrap.css');
         $this->document->addScript('view/javascript/d_tinysort/tinysort.js');
         $this->document->addScript('view/javascript/d_tinysort/jquery.tinysort.min.js');
         $this->document->addScript('view/javascript/d_rubaxa_sortable/sortable.js');
         $this->document->addStyle('view/javascript/d_rubaxa_sortable/sortable.css');
-        $this->document->addStyle('view/javascript/d_bootstrap_switch/css/bootstrap-switch.css');
-        $this->document->addScript('view/javascript/d_bootstrap_switch/js/bootstrap-switch.min.js');
         $this->document->addStyle('view/javascript/d_bootstrap_colorpicker/css/bootstrap-colorpicker.css');
         $this->document->addScript('view/javascript/d_bootstrap_colorpicker/js/bootstrap-colorpicker.js');
         $this->document->addStyle('view/stylesheet/d_social_like.css');
@@ -94,17 +94,16 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $data['text_edit'] = $this->language->get('text_edit');
 
         // Variable
-        $data['id'] = $this->codename;
+        $data['codename'] = $this->codename;
         $data['route'] = $this->route;
         $data['module_id'] = $module_id;
         $data['config'] = $this->config_file;
+        $data['pro'] = $this->d_social_like_pro;
         $data['stores'] = $this->model_extension_module_d_social_like->getStores();
         $data['languages'] = $this->model_extension_module_d_social_like->getLanguages();
         $data['version'] = $this->extension['version'];
         $data['no_image'] = $this->model_extension_module_d_social_like->getThumb('', 100, 100);
         $data['d_shopunity'] = $this->d_shopunity;
-
-        $this->load->model('extension/d_opencart_patch/user');
 
         $data['token'] = $this->model_extension_d_opencart_patch_user->getToken();
 
@@ -234,7 +233,7 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         );
 
         //setting
-        $setting = $this->getSetting();
+        $data['setting'] = $this->getSetting();
         // $setting = $this->model_extension_d_opencart_patch_module->getModule($module_id);
 
         // if(!empty($this->request->post['config'])){
@@ -324,10 +323,10 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         //get social like settings
         foreach(glob(DIR_CONFIG.'/d_social_like/*.php') as $file) {
             $social_like_id = substr(basename($file), 0, -4);
-            if(!isset($result[$key]['social_likes'][$social_like_id])){
+            if(!isset($result['social_likes'][$social_like_id])){
                 $this->config->load('d_social_like/'.$social_like_id);
-                if($this->config->get('d_social_like_'.$social_like_id){
-                    $result[$key]['social_likes'][$social_like_id] = $this->config->get('d_social_like_'.$social_like_id); 
+                if($this->config->get('d_social_like_'.$social_like_id)){
+                    $result['social_likes'][$social_like_id] = $this->config->get('d_social_like_'.$social_like_id); 
                 }
             }
         }
@@ -339,6 +338,8 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $this->load->model('localisation/language');
         $this->load->model('setting/setting');
         $this->load->model('extension/module/d_social_like');
+        $this->load->model('extension/d_opencart_patch/module');
+        $this->load->model('extension/d_opencart_patch/url');
         $this->config->load('d_social_like');
         $data = $this->config->get('d_social_like');
         $data['name'] = 'd_social_like';
@@ -388,9 +389,9 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 
             if (!$module_id) {
-                $this->model_extension_d_opencart_patch_module->addModule($this->codename, $this->request->post[$this->codename]);
+                $this->model_extension_d_opencart_patch_module->addModule($this->codename, $this->request->post[$this->codename.'_setting']);
             } else {
-                $this->model_extension_d_opencart_patch_module->editModule($module_id, $this->request->post[$this->codename]);
+                $this->model_extension_d_opencart_patch_module->editModule($module_id, $this->request->post[$this->codename.'_setting']);
             }
 
             $json['success'] = $this->language->get('text_success');
@@ -410,7 +411,7 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-private function validate($permission = 'modify')
+    private function validate($permission = 'modify')
     {
         if (isset($this->request->post['config'])) {
             return false;
@@ -423,7 +424,7 @@ private function validate($permission = 'modify')
             return false;
         }
 
-        $setting = $this->request->post[$this->codename];
+        $setting = $this->request->post[$this->codename.'_setting'];
 
         if ((utf8_strlen($setting['name']) < 3) || (utf8_strlen($setting['name']) > 64)) {
             $this->error['warning'] = $this->language->get('error_warning');
