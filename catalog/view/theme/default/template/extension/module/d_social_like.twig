@@ -32,7 +32,7 @@
 #d_social_like .dlike-img{
     cursor: pointer;
 }
-#d_social_like .dlike-img span{
+#d_social_like .dlike-img svg{
     background: none !important;
 }
 /**
@@ -68,7 +68,7 @@
     clear: both;
 }
 #d_social_like.left .dlike-button{
-    padding: 0px 5px;
+    padding: 2px 5px;
     height: 25px;
     margin-left: -160px;
     float: left;
@@ -81,9 +81,17 @@
     padding: 5px 4px;
     z-index: 1000
 }
-#d_social_like.left .dlike-img span{
-    font-size: 21px;
+
+#d_social_like.left .dlike-img{
+    text-align: center;
 }
+#d_social_like.left .dlike-img svg,
+#d_social_like.left .dlike-img img{
+    font-size: 21px;
+    max-height: 21px;
+    max-width: 21px;
+}
+
 #d_social_like.left .dlike-bg{
     position: absolute;
     z-index: 1;
@@ -135,8 +143,14 @@
     padding: 5px 4px;
     z-index: 1000
 }
-#d_social_like.right .dlike-img span{
+#d_social_like.right .dlike-img{
+    text-align: center;
+}
+#d_social_like.right .dlike-img svg,
+#d_social_like.right .dlike-img img{
     font-size: 21px;
+    max-height: 21px;
+    max-width: 21px;
 }
 #d_social_like.right .dlike-bg{
     position: absolute;
@@ -359,19 +373,21 @@
             <div id="d_social_like_{{ social_like['id'] }}" class="dlike-item">
                 <style>
                 #d_social_like_{{ social_like['id'] }} .dlike-img{
-                    background: {{ social_like['background_color'] }};
+                    background-color: {{ social_like['background_color'] }};
                 }
                 #d_social_like_{{ social_like['id'] }}:hover .dlike-img{
-                    background: {{ social_like['background_color_active'] }}
+                    background-color: {{ social_like['background_color_active'] }}
                 }
-                #d_social_like_{{ social_like['id'] }} .dlike-img span{
-                    color: {{ social_like['icon_color'] }}
+                #d_social_like_{{ social_like['id'] }} .dlike-img svg{
+                    color: {{ social_like['icon_color'] }};
+                    fill: {{ social_like['icon_color'] }};
                 }
-                #d_social_like_{{ social_like['id'] }}:hover .dlike-img span{
-                    color: {{ social_like['icon_color_active'] }}
+                #d_social_like_{{ social_like['id'] }}:hover .dlike-img svg{
+                    color: {{ social_like['icon_color_active'] }};
+                    fill: {{ social_like['icon_color_active'] }};
                 }
             </style>
-                <div class="dlike-img"><span class="dlike-{{ social_like['icon'] }}"></span></div>
+                <div class="dlike-img"><img src="catalog/view/theme/default/image/d_social_like/{{ social_like['icon'] }}.svg" class="dlike-svg" /></div>
                 <div class="dlike-button" style="width:{{ social_like['width'] ? social_like['width']|number_format ~ 'px' : '' }}">{{ social_like['code'] }}</div>
             </div>
         {% endif %}
@@ -421,5 +437,37 @@ $('#d_social_like .dlike-bg, #d_social_like_close').click(function(){
     $('#d_social_like .dlike-bg').fadeOut();
     $('#d_social_like .dlike-wrap').fadeOut();
 })
+$('img.dlike-svg').each(function(){
+    var $img = jQuery(this);
+    var imgID = $img.attr('id');
+    var imgClass = $img.attr('class');
+    var imgURL = $img.attr('src');
+
+    $.get(imgURL, function(data) {
+        // Get the SVG tag, ignore the rest
+        var $svg = jQuery(data).find('svg');
+
+        // Add replaced image's ID to the new SVG
+        if(typeof imgID !== 'undefined') {
+            $svg = $svg.attr('id', imgID);
+        }
+        // Add replaced image's classes to the new SVG
+        if(typeof imgClass !== 'undefined') {
+            $svg = $svg.attr('class', imgClass+' replaced-svg');
+        }
+
+        // Remove any invalid XML tags as per http://validator.w3.org
+        $svg = $svg.removeAttr('xmlns:a');
+
+        // Check if the viewport is set, if the viewport is not set the SVG wont't scale.
+        if(!$svg.attr('viewBox') && $svg.attr('height') && $svg.attr('width')) {
+            $svg.attr('viewBox', '0 0 ' + $svg.attr('height') + ' ' + $svg.attr('width'))
+        }
+
+        // Replace image with new SVG
+        $img.replaceWith($svg);
+
+    }, 'xml');
+});
 {% endif %}
 </script>

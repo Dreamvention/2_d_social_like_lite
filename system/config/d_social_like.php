@@ -8,6 +8,7 @@ $_['d_social_like_setting'] = array(
   'url'  => '',
   'config_setting' => 'd_social_like',
   'social_likes' => array(),
+  'addthis_id' => 'ra-4d8b33027d80e2ce',
   'design' => array(
     'icon_theme' => 'square',
     'background_color' => '#fff',
