@@ -18,21 +18,6 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $this->d_twig_manager = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_twig_manager.json'));
         $this->d_social_like_pro = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_social_like_pro.json'));
 
-        // if (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/'.$this->codename_pro.'.json')) {
-
-        //     if (file_exists(DIR_CONFIG.$this->codename_pro.'.php')) {
-        //         $this->config_file = $this->codename_pro;
-        //     }
-        // }
-
-        // if (file_exists(DIR_LANGUAGE.'en-gb/extension/module/'.$this->codename_pro.'.php')) {
-        //     $this->load->language('extension/module/'.$this->codename_pro);
-        // } else {
-        //     $this->load->language($this->route);
-        // }
-
-
-    
     }
 
     public function index()
@@ -321,13 +306,23 @@ class ControllerExtensionModuleDSocialLike extends Controller {
             }
         }
         //get social like settings
+        $social_logins = array();
         foreach(glob(DIR_CONFIG.'/d_social_like/*.php') as $file) {
-            $social_like_id = substr(basename($file), 0, -4);
+            $social_logins[] = substr(basename($file), 0, -4);
+        }
+
+        foreach($social_logins as $social_like_id){
             if(!isset($result['social_likes'][$social_like_id])){
                 $this->config->load('d_social_like/'.$social_like_id);
                 if($this->config->get('d_social_like_'.$social_like_id)){
                     $result['social_likes'][$social_like_id] = $this->config->get('d_social_like_'.$social_like_id); 
                 }
+            }
+        }
+
+        foreach($result['social_likes'] as $social_like_id => $social_like){
+            if(!in_array($social_like_id, $social_logins)){
+                unset($result['social_likes'][$social_like_id]);
             }
         }
         return $result;
