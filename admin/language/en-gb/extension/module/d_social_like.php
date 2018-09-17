@@ -11,6 +11,7 @@ $_['text_design']                   = 'Design';
 $_['text_instructions']             = 'Instructions';
 $_['text_ticket']                   = 'Open Ticket';
 $_['entry_ticket']                  = 'Support<br/><small>Create a ticket. If you find a bug, even in a free version, please let us know.</small>';
+$_['text_pro']                      = '<a href="https://dreamvention.ee/social-like-buttons-facebook-twitter-pintrest-google-etc" target="_blank">If you need facebook, twitter and the rest of popular social likes - upgrade to PRO now!</a>';
 
 $_['text_view_left']                = 'Left';
 $_['text_view_top']                 = 'Top';
@@ -130,45 +131,4 @@ $_['text_setup']                    = '<style>
                 
                 </div>
             </div>';
-// 
-// $_['text_all_languages']            = 'All Languages';
-// $_['text_pro']                      = '<a href="https://dreamvention.ee/social-like-buttons-facebook-twitter-pintrest-google-etc">If you need facebook, twitter and the rest of popular social likes - upgrade to PRO now!</a>';
-// $_['text_yes']                      = 'Yes';
-// $_['text_no']                       = 'No';
-// $_['text_enabled']                  = 'Enabled';
-// $_['text_disabled']                 = 'Disabled';
-// $_['text_success_no_update']        = 'Super! You have the latest version.';
-// $_['text_warning_new_update']       = 'Wow! There is a new version available for download.';
-// $_['text_error_update']             = 'Sorry! Something went wrong. If this repeats, contact the support please.';
-// $_['text_error_failed']             = 'Oops! We could not connect to the server. Please try again later.';
-
-// $_['help_config_files']             = 'You can select from a list of predefined settings the one you like and then edit them.';
-// $_['help_icon_theme']             = 'You can select another icon design for the two views of social likes: left and right. the rest of the views show the buttons directly without icons.';
-
-// $_['text_google']               = 'Google+';
-// $_['text_facebook']               = 'Facebook';
-// $_['text_twitter']              = 'Twitter';
-
-// $_['text_live']                 = 'Live';
-// $_['text_linkedin']               = 'LinkedIn';
-// $_['text_vkontakte']              = 'Vkontakte';
-// $_['text_odnoklassniki']          = 'Odnoklassniki';
-// $_['text_mailru']               = 'Mail.ru';
-// $_['text_stumbleupon']            = 'Stumbleupon';
-// $_['text_foursquare']             = 'Foursquare';
-// $_['text_amazon']               = 'Amazon  <i class="icon-question" rel="tooltip" data-help="Amazone button saves the product to ypur wishlist on Amazone. This option will show only on a product page. You will not see it on other pages, even if you have activated it here."></i>';
-// $_['text_pinterest']              = 'Pinterest';
-// $_['text_addthis']              = 'Addthis';
-
-// $_['button_save']                 = 'Save';
-// $_['button_cancel']               = 'Cancel';
-// $_['button_get_update']           = 'Check for update';
-
-// $_['entry_language']          = 'Language';
-// $_['entry_store']             = 'Store';
-// $_['entry_get_update']            = 'You have version %s';
-// $_['entry_config_files']        = 'Config files';
-
-// $_['entry_config_settings']         = 'Predefined settings';
-// $_['entry_icon_theme']            = 'Icon design ';
 ?>
