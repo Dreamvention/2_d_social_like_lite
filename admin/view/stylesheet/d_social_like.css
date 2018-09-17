@@ -11,7 +11,7 @@
 }
 #table_social_likes tbody td:first-child {
 	text-align: left;
-	padding-left: 3%;
+	padding-left: 15px;
 }
 #table_social_likes td:last-child {
 	width: 2%;

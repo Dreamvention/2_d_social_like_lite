@@ -62,16 +62,17 @@
 
         "catalog/controller/extension/module/d_social_like.php",
         "catalog/language/en-gb/extension/module/d_social_like.php",
-        "catalog/model/extension/module/d_social_like.php",
         "catalog/view/theme/default/template/extension/module/d_social_like.twig",
 
         "system/config/d_social_like/google.php",
         "catalog/view/theme/default/template/extension/module/d_social_like/google.twig",
-        "catalog/view/theme/default/image/d_social_like/google.svg",
+        "catalog/view/theme/default/image/d_social_like/square/google.svg",
+        "catalog/view/theme/default/image/d_social_like/original/google.svg",
 
         "system/config/d_social_like/linkedin.php",
         "catalog/view/theme/default/template/extension/module/d_social_like/linkedin.twig",
-        "catalog/view/theme/default/image/d_social_like/linkedin.svg"
+        "catalog/view/theme/default/image/d_social_like/square/linkedin.svg",
+        "catalog/view/theme/default/image/d_social_like/original/linkedin.svg"
     ],
     "dirs": [
         "admin/view/image/d_social_like"

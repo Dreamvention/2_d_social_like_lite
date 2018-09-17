@@ -387,7 +387,7 @@
                     fill: {{ social_like['icon_color_active'] }};
                 }
             </style>
-                <div class="dlike-img"><img src="catalog/view/theme/default/image/d_social_like/{{ social_like['icon'] }}.svg" class="dlike-svg" /></div>
+                <div class="dlike-img"><img src="catalog/view/theme/default/image/d_social_like/{{ design['icon_theme'] }}/{{ social_like['icon'] }}.svg" class="dlike-svg" /></div>
                 <div class="dlike-button" style="width:{{ social_like['width'] ? social_like['width']|number_format ~ 'px' : '' }}">{{ social_like['code'] }}</div>
             </div>
         {% endif %}

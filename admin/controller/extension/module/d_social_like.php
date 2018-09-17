@@ -1,11 +1,11 @@
 <?php
-
 class ControllerExtensionModuleDSocialLike extends Controller {
 
     private $codename = 'd_social_like';
     private $route = 'extension/module/d_social_like';
     private $config_file = 'd_social_like';
     private $error = array();
+    private $store_id = -1;
 
     public function __construct($registry)
     {
@@ -17,11 +17,14 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $this->extension = json_decode(file_get_contents(DIR_SYSTEM.'library/d_shopunity/extension/'.$this->codename.'.json'), true);
         $this->d_twig_manager = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_twig_manager.json'));
         $this->d_social_like_pro = (file_exists(DIR_SYSTEM.'library/d_shopunity/extension/d_social_like_pro.json'));
-
+        if (isset($this->request->get['store_id'])) { 
+            $data['store_id'] = $this->request->get['store_id']; 
+        }
     }
 
     public function index()
     {
+        
         if($this->d_shopunity){
             $this->load->model('extension/d_shopunity/mbooth');
             $this->model_extension_d_shopunity_mbooth->validateDependencies($this->codename);
@@ -69,8 +72,9 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         if(isset($this->request->get['module_id'])){
             $url .=  '&module_id='.$module_id;
         }
-        if(isset($this->request->get['config'])){
-            $url .=  '&config='.$this->request->get['config'];
+
+        if(isset($this->request->get['store_id'])){
+            $url .=  '&store_id='.$this->request->get['store_id'];
         }
 
         // Heading
@@ -85,10 +89,9 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $data['config'] = $this->config_file;
         $data['pro'] = $this->d_social_like_pro;
         $data['stores'] = $this->model_extension_module_d_social_like->getStores();
-        $data['languages'] = $this->model_extension_module_d_social_like->getLanguages();
         $data['version'] = $this->extension['version'];
-        $data['no_image'] = $this->model_extension_module_d_social_like->getThumb('', 100, 100);
         $data['d_shopunity'] = $this->d_shopunity;
+        $data['store_id'] = $this->store_id;
 
         $data['token'] = $this->model_extension_d_opencart_patch_user->getToken();
 
@@ -166,19 +169,6 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         $data['text_pro'] = $this->language->get('text_pro');
 
         $data['text_sort_order'] = $this->language->get('text_sort_order');
-        $data['text_facebook'] = $this->language->get('text_facebook');
-        $data['text_google'] = $this->language->get('text_google');
-        $data['text_twitter'] = $this->language->get('text_twitter');
-        $data['text_live'] = $this->language->get('text_live');
-        $data['text_linkedin'] = $this->language->get('text_linkedin');
-        $data['text_vkontakte'] = $this->language->get('text_vkontakte');
-        $data['text_odnoklassniki'] = $this->language->get('text_odnoklassniki');
-        $data['text_mailru'] = $this->language->get('text_mailru');
-        $data['text_stumbleupon'] = $this->language->get('text_stumbleupon');
-        $data['text_foursquare'] = $this->language->get('text_foursquare');
-        $data['text_amazon'] = $this->language->get('text_amazon');
-        $data['text_pinterest'] = $this->language->get('text_pinterest');
-        $data['text_addthis'] = $this->language->get('text_addthis');
 
         // Notification
         if (isset($this->error['warning'])) {
@@ -219,31 +209,16 @@ class ControllerExtensionModuleDSocialLike extends Controller {
 
         //setting
         $data['setting'] = $this->getSetting();
-        // $setting = $this->model_extension_d_opencart_patch_module->getModule($module_id);
 
-        // if(!empty($this->request->post['config'])){
-        //     $data['config'] = $this->request->post['config'];
-        //     $this->config->load($this->request->post['config']);
-        // } elseif(!empty($setting)) {
-        //     $data['config'] = $setting['config'];
-        //     $this->config->load($setting['config']);
-        // } else {
-        //     $this->config->load($data['config']);
-        // }
+        if (isset($this->request->get['store_id'])) { 
+            $data['store_id'] = $this->request->get['store_id']; 
+        }elseif(isset($data['setting']['store_id'])){
+            $data['store_id'] = $data['setting']['store_id'];
+        }else{
+            $data['store_id'] = $this->store_id;
+        }
 
-        // $data['setting'] = ($this->config->get($this->codename)) ? $this->config->get($this->codename) : array();
-
-        // if (!empty($setting)) {
-        //     if(!empty($this->request->post['config'])){
-        //         unset($setting['social_likes']);
-        //     }
-        //     $data['setting'] = array_replace_recursive($data['setting'], $setting);
-        // }
-
-
-
-        // //get config
-        // $data['config_files'] = $this->model_extension_module_d_social_like->getConfigFiles($this->codename);
+        $data['icon_themes'] = $this->getIconThemes();
 
         //Get views
         $data['views'] = array(
@@ -253,20 +228,6 @@ class ControllerExtensionModuleDSocialLike extends Controller {
             3 => array('view_id' => 'bottom', 'name' => $this->language->get('text_view_bottom')),
             4 => array('view_id' => 'inline', 'name' => $this->language->get('text_view_inline'))
         );
-
-        //Get icon designes
-        $dir = DIR_CATALOG.'/view/theme/default/stylesheet/d_social_like/icons';
-        $files = glob($dir . '/*', GLOB_ONLYDIR);
-        $data['icon_themes'] = array();
-        foreach($files as $file){
-            if(strlen($file) > 6){
-                $data['icon_themes'][] = basename($file);
-            }
-        }
-
-        // foreach(glob(DIR_CONFIG.'/d_social_like*.*') as $file) {
-        //     $data['config_settings'][] = substr(basename($file), 0, -4);
-        // }
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
@@ -307,7 +268,7 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         }
         //get social like settings
         $social_logins = array();
-        foreach(glob(DIR_CONFIG.'/d_social_like/*.php') as $file) {
+        foreach(glob(DIR_CONFIG.'d_social_like/*.php') as $file) {
             $social_logins[] = substr(basename($file), 0, -4);
         }
 
@@ -328,21 +289,28 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         return $result;
     }
 
+    private function getIconThemes(){
+        $icon_themes = array();
+        foreach(glob(DIR_CATALOG.'view/theme/default/image/d_social_like/*') as $file) {
+            $icon_themes[] = basename($file, GLOB_ONLYDIR);
+        }
+        return $icon_themes;
+    }
+
     public function setup()
-    {
-        $this->load->model('localisation/language');
-        $this->load->model('setting/setting');
+    {   
+        $this->load->language($this->route);
         $this->load->model('extension/module/d_social_like');
         $this->load->model('extension/d_opencart_patch/module');
         $this->load->model('extension/d_opencart_patch/url');
-        $this->config->load('d_social_like');
-        $data = $this->config->get('d_social_like');
+        $data = $this->getSetting();
         $data['name'] = 'd_social_like';
         $data['status'] = 1;
-        $data['config'] = 'd_social_like';
         $this->model_extension_d_opencart_patch_module->addModule($this->codename, $data);
         $module_id = $this->db->getLastId();
+
         $this->model_extension_module_d_social_like->addToLayoutFromSetup($module_id);
+
         $this->session->data['success'] = $this->language->get('success_setup');
         $this->response->redirect($this->model_extension_d_opencart_patch_url->link($this->route.'&module_id='.$module_id));
     }
@@ -380,7 +348,6 @@ class ControllerExtensionModuleDSocialLike extends Controller {
         }
 
         $json['success'] = '';
-
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 
             if (!$module_id) {
@@ -388,9 +355,7 @@ class ControllerExtensionModuleDSocialLike extends Controller {
             } else {
                 $this->model_extension_d_opencart_patch_module->editModule($module_id, $this->request->post[$this->codename.'_setting']);
             }
-
             $json['success'] = $this->language->get('text_success');
-
         }
 
         if (isset($this->request->get['exit'])) {
