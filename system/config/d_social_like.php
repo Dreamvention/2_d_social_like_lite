@@ -1,5 +1,5 @@
 <?php
-$_['d_social_like'] = array(
+$_['d_social_like_setting'] = array(
   'status' => false,
   'name' => '',
   'language_id' => '-1',
@@ -7,32 +7,8 @@ $_['d_social_like'] = array(
   'view_id' => 'left',
   'url'  => '',
   'config_setting' => 'd_social_like',
-  'social_likes' => array(
-
-    'google' => array(
-      'id'  => 'google',
-      'enabled' => true,
-      'sort_order' => 1,
-      'width' => '70',
-      'icon' => 'icon-google-plus',
-      'icon_color' => '#999999',
-      'icon_color_active' => '#dd4b38',
-      'background_color' => '#fff',
-      'background_color_active' => '#fcfcfc',
-    ),
-    'linkedin' => array(
-      'id'  => 'linkedin',
-      'enabled' => true,
-      'sort_order' => 3,
-      'width' => '105',
-      'icon' => 'icon-linkedin',
-      'icon_color' => '#999999',
-      'icon_color_active' => '#4487bd',
-      'background_color' => '#fff',
-      'background_color_active' => '#fcfcfc',
-    )
-  ),
-
+  'social_likes' => array(),
+  'addthis_id' => 'ra-4d8b33027d80e2ce',
   'design' => array(
     'icon_theme' => 'square',
     'background_color' => '#fff',

@@ -1,6 +1,6 @@
 {
     "codename": "d_social_like",
-    "version": "3.1.3",
+    "version": "3.2.0",
     "name": "Social Like",
     "description": "This module adds social network like buttons to your webshop. place them anywhere you like and the like buttons will automatically like the current page.",
     "index": "extension/module/d_social_like",
@@ -39,7 +39,6 @@
     "files": [
         "system/library/d_shopunity/extension/d_social_like.json",
         "system/config/d_social_like.php",
-        "system/config/d_social_like_metro.php",
 
         "admin/controller/extension/module/d_social_like.php",
         "admin/language/en-gb/extension/module/d_social_like.php",
@@ -49,14 +48,26 @@
 
         "catalog/controller/extension/module/d_social_like.php",
         "catalog/language/en-gb/extension/module/d_social_like.php",
-        "catalog/model/extension/module/d_social_like.php",
-        "catalog/view/theme/default/template/extension/module/d_social_like.twig"
+        "catalog/view/theme/default/template/extension/module/d_social_like.twig",
+
+        "system/config/d_social_like/google.php",
+        "catalog/view/theme/default/template/extension/module/d_social_like/google.twig",
+        "catalog/view/theme/default/image/d_social_like/square/google.svg",
+        "catalog/view/theme/default/image/d_social_like/original/google.svg",
+
+        "system/config/d_social_like/linkedin.php",
+        "catalog/view/theme/default/template/extension/module/d_social_like/linkedin.twig",
+        "catalog/view/theme/default/image/d_social_like/square/linkedin.svg",
+        "catalog/view/theme/default/image/d_social_like/original/linkedin.svg"
     ],
     "dirs": [
-        "admin/view/image/d_social_like",
-        "catalog/view/theme/default/stylesheet/d_social_like"
+        "admin/view/image/d_social_like"
     ],
     "changelog": [
+        {
+            "version":"3.2.0",
+            "change": "Fix problem with pro version, revert commit c42d50690322b6cd1959b8052a76f4215d5da316 and add sem ver"
+        },
         {
             "version":"3.1.3",
             "change": "Validator dependency"
@@ -64,6 +75,14 @@
         {
             "version":"3.1.2",
             "change": "sem var"
+        },
+        {
+            "version":"3.1.1",
+            "change": "Added support OC v3.0.3.1"
+        },
+        {
+            "version":"3.1.0",
+            "change": "Code refactor"
         },
         {
             "version":"3.0.2",
